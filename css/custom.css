@@ -1,0 +1,21 @@
+input.w550{
+  width: 550 !important;
+}
+w750{
+  width: 750 !important;
+}
+table.dataTable{
+  width:90%;
+  margin: 10px 10px;
+}
+table.dataTable td,th{
+  border: solid 1px black;
+  padding: 10px 10px;
+}
+ul,li{
+  list-style: none;
+  padding: 2px 1px;
+}
+input.ng-invalid,textarea.ng-invalid,select.ng-invalid {
+    border: solid 1px pink;
+}
