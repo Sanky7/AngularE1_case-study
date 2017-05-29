@@ -1,10 +1,10 @@
 {"menu": {
     "menuitem": [
-      {"name": "abc", "email": "abc@gmail.com","address": "abc,India", "dob": "05/01/2017", "userName" : "abc", "pass" : "abc","category" :"Family","isExpanded":false,"iconClass":null},
-      {"name": "efg", "email": "efg@gmail.com","address": "efg,India", "dob": "06/05/2010", "userName" : "efg", "pass" : "efg","category" :"Family","isExpanded":false,"iconClass":null},
-      {"name": "pqr", "email": "pqr@gmail.com","address": "pqr,India", "dob": "04/04/2019", "userName" : "pqr", "pass" : "pqr","category" :"Friends","isExpanded":true,"iconClass":null},
-      {"name": "xyz", "email": "xyz@gmail.com","address": "xyz,India", "dob": "01/01/1992", "userName" : "xyz", "pass" : "xyz","category" :"Friends","isExpanded":true,"iconClass":null},
-      {"name": "unknown", "email": "unknown@gmail.com","address": "unknown,India", "dob": "04/04/2019", "userName" : "unknown", "pass" : "unknown","category" :"Collegues","isExpanded":false,"iconClass":null}
+      {"name": "abc", "email": "abc@gmail.com","address": "abc,India", "dob": "05/01/2017", "userName" : "abc", "pass" : "abc","category" :"Family"},
+      {"name": "efg", "email": "efg@gmail.com","address": "efg,India", "dob": "06/05/2010", "userName" : "efg", "pass" : "efg","category" :"Family"},
+      {"name": "pqr", "email": "pqr@gmail.com","address": "pqr,India", "dob": "04/04/2019", "userName" : "pqr", "pass" : "pqr","category" :"Friends"},
+      {"name": "xyz", "email": "xyz@gmail.com","address": "xyz,India", "dob": "01/01/1992", "userName" : "xyz", "pass" : "xyz","category" :"Friends"},
+      {"name": "unknown", "email": "unknown@gmail.com","address": "unknown,India", "dob": "04/04/2019", "userName" : "unknown", "pass" : "unknown","category" :"Collegues"}
     ]
   }
 }

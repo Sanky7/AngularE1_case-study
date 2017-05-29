@@ -12,23 +12,44 @@ CMController.$inject =['$scope','$http'];
       $scope.data.isLoggedUser = false;
 
       $scope.checkLogin = function(){
-        $scope.loginIndicator=true;
-            $http.get("data.json")
-                .then(function(response) {
-                  $scope.data.contactList = [];
-                  angular.forEach(response.data.menu.menuitem, function(value, key){
-                            $scope.data.contactList[key] = value;
-                            if($scope.data.contactList[key].isExpanded){
-                              $scope.data.contactList[key].isExpanded = false;
-                              $scope.data.contactList[key].iconClass = "fa fa-paper-plane";
-                            }
-                            else{
-                                  $scope.data.contactList[key].isExpanded = true;
-                                  $scope.data.contactList[key].iconClass = "fa fa-bolt";
-                            }
-                  });
-                  return;
-            });
+        if(($scope.data.username!= undefined && $scope.data.username.trim() != "") && $scope.data.password != undefined){
+          $scope.loginIndicator=true;
+              $http.get("data.json")
+                  .then(function(response) {
+                    $scope.data.contactList = [];
+                    $scope.data.treeList = [];
+                    $scope.friendObj = {category : null,iconClass:"fa fa-paper-plane",isExpanded:false,catList:[] };
+                    $scope.familyObj = {category : null,iconClass:"fa fa-paper-plane",isExpanded:false,catList:[] };
+                    $scope.collObj = {category : null,iconClass:"fa fa-paper-plane",isExpanded:false,catList:[] };
+                    angular.forEach(response.data.menu.menuitem, function(value, key){
+
+                              //To build tree
+                              if(value.category == "Family"){
+                                 $scope.familyObj.category = "Family";
+                                 $scope.familyObj.catList.push(value);
+                                 //To store as local storage
+                                 $scope.data.contactList[key] = value;
+                              }
+                              if(value.category== "Collegues"){
+                                 $scope.collObj.category = "Collegues";
+                                 $scope.collObj.catList.push(value);
+                                 //To store as local storage
+                                 $scope.data.contactList[key] = value;
+                              }
+                              if(value.category== "Friends"){
+                                 $scope.friendObj.category = "Friends";
+                                 $scope.friendObj.catList.push(value);
+                                 //To store as local storage
+                                 $scope.data.contactList[key] = value;
+                              }
+
+                    });
+                    $scope.data.treeList.push($scope.familyObj);
+                    $scope.data.treeList.push($scope.friendObj);
+                    $scope.data.treeList.push($scope.collObj);
+                    return;
+              });
+        }
       };
 
       $scope.loadContact = function (selectedObj){
@@ -47,15 +68,15 @@ CMController.$inject =['$scope','$http'];
             return;
       };
 
-      $scope.toggleExpand = function(contact){
-        var index = $scope.data.contactList.indexOf(contact);
-        if($scope.data.contactList[index].isExpanded){
-          $scope.data.contactList[index].isExpanded = false;
-          $scope.data.contactList[index].iconClass = "fa fa-paper-plane";
+      $scope.toggleExpand = function(contacts){
+        var index = $scope.data.treeList.indexOf(contacts);
+        if($scope.data.treeList[index].isExpanded){
+          $scope.data.treeList[index].isExpanded = false;
+          $scope.data.treeList[index].iconClass = "fa fa-paper-plane";
         }
         else{
-              $scope.data.contactList[index].isExpanded = true;
-              $scope.data.contactList[index].iconClass = "fa fa-bolt";
+              $scope.data.treeList[index].isExpanded = true;
+              $scope.data.treeList[index].iconClass = "fa fa-bolt";
         }
         return;
       };
@@ -92,9 +113,5 @@ CMController.$inject =['$scope','$http'];
         $scope.data.isEdit = false;
         return;
       };
-
-
-
-        //{"name": "abc", "email": "abc@gmail.com","address": "abc,India", "dob": "05/01/2017", "userName" : "abc", "pass" : "abc","category" :"Family","isExpanded":false,"iconClass":null},
   }
 })();

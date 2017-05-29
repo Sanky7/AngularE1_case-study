@@ -20,21 +20,21 @@
 <body ng-app="contactManagement">
    <div class="container" ng-controller="CMController">
      <h1>Contacts Management Application</h1>
-
+      <form name="loginForm">
          <div class="form-group" ng-if="loginIndicator == false">
              <input  type="text"
              placeholder="Enter User name"
-             class="form-control w550" ng-model="data.username" required="">
+             class="form-control w550" ng-model="data.username">
              <br clear="all"/>
              <input type="password"
              placeholder="Enter Password"
-             class="form-control" ng-model="data.password" required="">
+             class="form-control" ng-model="data.password">
 
              <br clear="all"/>
-             <button class="btn btn-success" ng-click="checkLogin()">Login</button>
-
+             <button type="submit" class="btn btn-success" ng-click="checkLogin()">Login</button>
+          </form>
          </div>
-         <div class="form-group" ng-if="loginIndicator == true">
+         <div  ng-if="loginIndicator == true">
             <span>
               <strong> Welcome to Contact management Application. You can create or edit contact and view then as groups.
             </span>
@@ -47,10 +47,10 @@
 
          <div style="width:100%" ng-if="loginIndicator == true">
            <div style="width:30%;border: 2px solid black;display:inline-block;float:left;height:600px;overflow-y:auto;padding-left:25px">
-             <ul ng-repeat="contact in data.contactList">
-               <li class="category"><i class="{{contact.iconClass}}" ng-click="toggleExpand(contact)"></i><strong> {{contact.category}} </strong></li>
+             <ul ng-repeat="contacts in data.treeList">
+               <li class="category"><i class="{{contacts.iconClass}}" ng-click="toggleExpand(contacts)"></i><strong> {{contacts.category}} </strong></li>
                <li>
-                  <ul ng-if="contact.isExpanded">
+                  <ul ng-if="contacts.isExpanded" ng-repeat="contact in contacts.catList">
                     <li><span style="padding-left:15px;cursor:pointer" ng-click="loadContact(contact)">{{contact.name}} ~ {{contact.email}}</span></li>
                   </ul>
                </li>
