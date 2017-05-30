@@ -40,7 +40,7 @@
             </span>
             <span style="float:right;padding-right:20px">
               <label><strong> {{data.username}} </strong></label>
-             <button class="btn btn-warning" ng-click="userLogout()">Logout</button>
+             <button class="btn btn-warning" ng-click="userLogout()"> Logout</button>
            </span>
          </div>
          <br clear="all"/>
@@ -51,7 +51,7 @@
                <li class="category"><i class="{{contacts.iconClass}}" ng-click="toggleExpand(contacts)"></i><strong> {{contacts.category}} </strong></li>
                <li>
                   <ul ng-if="contacts.isExpanded" ng-repeat="contact in contacts.catList">
-                    <li><span style="padding-left:15px;cursor:pointer" ng-click="loadContact(contact)">{{contact.name}} ~ {{contact.email}}</span></li>
+                    <li class="contactLi"><span style="padding-left:15px;cursor:pointer" ng-click="loadContact(contact)"><i class="fa fa-address-book-o"></i> {{contact.name}} ~ {{contact.email}}</span></li>
                   </ul>
                </li>
              </ul>
@@ -97,7 +97,7 @@
                </tr>
                <tr>
                  <td style="width:40%">
-                   <label><strong> DOB:</strong></label>
+                   <label>*<strong> DOB:</strong></label>
                  </td>
                  <td style="width:60%">
                    <input  type="text" placeholder="Enter DOB"

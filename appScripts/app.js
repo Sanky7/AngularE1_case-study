@@ -17,10 +17,11 @@ CMController.$inject =['$scope','$http'];
               $http.get("data.json")
                   .then(function(response) {
                     $scope.data.contactList = [];
+                    $scope.data.selectedContact = [];
                     $scope.data.treeList = [];
-                    $scope.friendObj = {category : null,iconClass:"fa fa-paper-plane",isExpanded:false,catList:[] };
-                    $scope.familyObj = {category : null,iconClass:"fa fa-paper-plane",isExpanded:false,catList:[] };
-                    $scope.collObj = {category : null,iconClass:"fa fa-paper-plane",isExpanded:false,catList:[] };
+                    $scope.friendObj = {category : null,iconClass:"fa fa-bolt",isExpanded:true,catList:[] };
+                    $scope.familyObj = {category : null,iconClass:"fa fa-bolt",isExpanded:true,catList:[] };
+                    $scope.collObj = {category : null,iconClass:"fa fa-bolt",isExpanded:true,catList:[] };
                     angular.forEach(response.data.menu.menuitem, function(value, key){
 
                               //To build tree
@@ -59,11 +60,15 @@ CMController.$inject =['$scope','$http'];
           if($scope.data.selectedContact.name == $scope.data.username){
               $scope.data.isLoggedUser = true;
           }
+          else{
+              $scope.data.isLoggedUser = false;
+          }
           return;
       };
 
       $scope.userLogout = function(){
             $scope.loginIndicator=false;
+            $scope.data.isLoggedUser = false;
             $scope.data = {};
             return;
       };
@@ -94,24 +99,71 @@ CMController.$inject =['$scope','$http'];
       };
 
       $scope.saveData = function(savedContact){
-        alert("Contact value saved is : \n"+ JSON.stringify(savedContact));
-        var index = $scope.data.contactList.indexOf(savedContact);
-        if(index == undefined || index <0){
-            $scope.data.contactList.push(savedContact);
-            return;
-        }
-        $scope.data.contactList[index] = savedContact;
-        $scope.data.allowed = false;
-        $scope.data.isEdit = false;
-        return;
+            $scope.validateForm(savedContact);
+            if($scope.data.isValid){
+                  alert("Contact value saved is : \n"+ JSON.stringify(savedContact));
+                  var index = $scope.data.contactList.indexOf(savedContact);
+                  if(index == undefined || index <0){
+                      $scope.data.contactList.push(savedContact);
+                      return;
+                  }
+                  $scope.data.contactList[index] = savedContact;
+                  $scope.data.allowed = false;
+                  $scope.data.isEdit = false;
+                  //to add to tree view
+                  angular.forEach($scope.data.treeList, function(value, key){
+                      if(value.category == savedContact.category){
+                          value.catList.push(savedContact);
+                          $scope.data.treeList[key] = value;
+                          return;
+                      }
+                  });
+
+                  return;
+            }
       };
 
       $scope.cancelEdit = function(savedContact){
         var index = $scope.data.contactList.indexOf(savedContact);
+        if(index == undefined || index <0){
+          $scope.data.selectedContact= [];
+            return;
+        }
         $scope.data.selectedContact = $scope.data.contactList[index];
         $scope.data.allowed = false;
         $scope.data.isEdit = false;
         return;
       };
+
+      $scope.validateForm = function (contactObj){
+          if(contactObj.name ==undefined || contactObj.name.trim() == ""){
+              $scope.data.isValid = false;
+              return;
+          }
+          if(contactObj.email ==undefined || contactObj.email.trim() == ""){
+              $scope.data.isValid = false;
+              return;
+          }
+          if(contactObj.dob ==undefined || contactObj.dob.trim() == ""){
+              $scope.data.isValid = false;
+              return;
+          }
+          if(contactObj.category ==undefined || contactObj.category.trim() == ""){
+              $scope.data.isValid = false;
+              return;
+          }
+          if($scope.data.isLoggedUser){
+            if(contactObj.userName ==undefined || contactObj.userName.trim() == ""){
+                $scope.data.isValid = false;
+                return;
+            }
+            if(contactObj.pass ==undefined){
+                $scope.data.isValid = false;
+                return;
+            }
+          }
+          $scope.data.isValid = true;
+          return;
+      }
   }
 })();
